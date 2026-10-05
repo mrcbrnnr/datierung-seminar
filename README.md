@@ -5,7 +5,6 @@ Stratigrafie, Altholz, Wiggle-Matching, Summenkurven und OxCal-Export.
 Die Beispieldaten sind fiktiv.
 
 **Live-Version:** `https://mrcbrnnr.github.io/datierung-seminar/`  
-(Link nach der Einrichtung unten eintragen.)
 
 Die Web-Version läuft komplett im Browser (Shinylive/WebAssembly). Es muss weder R installiert
 noch ein Server betrieben werden. Beim ersten Öffnen dauert das Laden etwa eine halbe Minute.
