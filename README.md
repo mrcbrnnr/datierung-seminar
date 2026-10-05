@@ -4,7 +4,7 @@ Didaktische App zu ¹⁴C-Kalibration, Dendro-Fenstern, Münzen (TPQ), Schriftqu
 Stratigrafie, Altholz, Wiggle-Matching, Summenkurven und OxCal-Export.
 Die Beispieldaten sind fiktiv.
 
-**Live-Version:** `https://DEIN-NAME.github.io/datierung-seminar/`  
+**Live-Version:** `https://mrcbrnnr.github.io/datierung-seminar/`  
 (Link nach der Einrichtung unten eintragen.)
 
 Die Web-Version läuft komplett im Browser (Shinylive/WebAssembly). Es muss weder R installiert
