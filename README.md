@@ -1,37 +1,68 @@
 # Datierungsteam: Shiny-App für das Seminar „Datierungsmethoden“
 
-Didaktische App zu ¹⁴C-Kalibration, Dendro-Fenstern, Münzen (TPQ), Schriftquellen (TAQ),
-Stratigrafie, Altholz, Wiggle-Matching, Summenkurven und OxCal-Export.
-Die Beispieldaten sind fiktiv.
+Interaktive Lernumgebung zu ¹⁴C-Kalibration, Dendrochronologie, Münzen (TPQ), Schriftquellen (TAQ),
+Stratigrafie und Bayes'scher Modellierung. Entstanden für ein Seminar an der Universität Tübingen.
+Alle Beispieldaten sind **fiktiv**.
 
-**Live-Version:** `https://mrcbrnnr.github.io/datierung-seminar/`  
+**App im Browser öffnen:** https://mrcbrnnr.github.io/datierung-seminar/
 
-Die Web-Version läuft komplett im Browser (Shinylive/WebAssembly). Es muss weder R installiert
-noch ein Server betrieben werden. Beim ersten Öffnen dauert das Laden etwa eine halbe Minute.
+Die Web-Version läuft komplett im Browser (Shinylive, R als WebAssembly). Es muss weder R installiert
+noch ein Server betrieben werden. Beim ersten Öffnen dauert das Laden etwa 20 bis 40 Sekunden.
+Empfohlen: Laptop mit aktuellem Chrome, Edge, Firefox oder Safari.
 
-## Einrichtung (einmalig)
+## Was die App kann
 
-1. Neues **öffentliches** Repository `datierung-seminar` auf GitHub anlegen und diese Dateien hochladen
-   (`app/app.R`, `.github/workflows/deploy.yml`, `README.md`, `.gitignore`).
-2. Im Repository: **Settings → Pages → Source: GitHub Actions** wählen.
-3. Unter **Actions** den Lauf „Shiny-App als Webseite veröffentlichen“ abwarten (einige Minuten).
-   Beim ersten Mal ggf. **Run workflow** drücken.
-4. Die Adresse steht unter **Settings → Pages** und im Lauf unter „deploy“.
+| Tab | Inhalt |
+|---|---|
+| 1 · Kalibration & Modell | Proben und Schichten eingeben oder ein Szenario laden; Modell mit Stratigrafie, TPQ, TAQ und Dendro-Fenstern; Annahmen einzeln ein- und ausschalten; Vergleich mit der Ablagerung nur aus den ¹⁴C-Daten |
+| 2 · Wiggle-Matching | Simulierte Ringsequenz an die IntCal20-Kurve legen, χ²-Test, Passungskurve |
+| 3 · SPD & Kombination | Summenkurve (verschiedene Ereignisse) oder Kombination (dasselbe Ereignis, gewichtetes Mittel mit χ²-Test) |
+| 4 · OxCal-Code | Erzeugt OxCal-Code aus dem Modell zum Vergleich |
+| 5 · Altholz-Check | Wie viel älter ist eine Probe als die jüngste Probe ihrer Schicht (oder als die Ablagerung)? |
+| 6 · Messwert → Alter | F14C in ¹⁴C-Alter umrechnen (und zurück) und kalibrieren |
+| 7 · Dendro-Crossdating | Probe gegen eine **simulierte** Referenzchronologie verschieben (r, t-Wert, Gleichläufigkeit), Fälljahr-Fenster aus Waldkante, Splint oder Kernholz |
 
-Bei jeder Änderung an `app/app.R` wird die Seite automatisch neu gebaut.
+Szenarien in Tab 1: „Kastell Musterberg“ (mit Konflikt in Schicht C und mit gelöstem Konflikt),
+„Plateau-Beispiel (Hallstatt-Zeit)“, „Altholz-Übung“ und „Kollektivgrab“ (Übung nach M. Hinz 2012).
 
-## Lokal starten (ohne Web-Version)
+Jahreszahlen dürfen in den Tabellen als Text eingegeben werden („480 v. Chr.“, „101 n. Chr.“).
+Intern wird astronomisch gezählt wie in OxCal (Jahr 0 = 1 v. Chr.). Oben rechts lässt sich die
+Anzeige zwischen v./n. Chr. und astronomischer Zählung umschalten.
+
+## Repository
+
+```
+app/app.R                          die komplette App
+.github/workflows/deploy.yml       baut die Web-Version und veröffentlicht sie über GitHub Pages
+README.md                          diese Datei
+```
+
+Bei jeder Änderung an `app/app.R` auf dem Zweig `main` baut GitHub Actions die Seite automatisch neu
+(einige Minuten). Voraussetzung: **Settings → Pages → Source: GitHub Actions**.
+Die Kalibrationskurve IntCal20 wird beim Bau von intcal.org geladen und neben die App gelegt.
+
+## Lokal starten
 
 ```r
 install.packages("shiny")
 shiny::runApp("app")
 ```
 
-Die Kalibrationskurve wird aus `app/intcal20.14c` gelesen. Fehlt die Datei, versucht die App
-lokal `rcarbon` oder einen Download von intcal.org. Die Web-Version bekommt die Datei im
-Workflow automatisch.
+Die Kurve wird aus `app/intcal20.14c` gelesen. Fehlt die Datei, versucht die App lokal das Paket
+`rcarbon` oder einen Download von intcal.org.
 
-## Quellen und Hinweise
+## Grenzen
 
-- IntCal20: Reimer et al. 2020, Radiocarbon 62, 725–757. Bitte die Nutzungshinweise auf intcal.org beachten.
-- Das Modell ist ein didaktisches Monte-Carlo-Modell und kein Ersatz für OxCal.
+- Das Modell ist ein didaktisches Monte-Carlo-Modell (Ziehen und Verwerfen), kein Ersatz für OxCal oder
+  andere MCMC-Software. Ergebnisse sind ähnlich, aber nicht identisch.
+- Nicht enthalten: Reservoireffekte, Marine20 und SHCal20, Ausreißermodelle (nur im OxCal-Export).
+- Die Referenzchronologie in Tab 7 ist simuliert und ersetzt keine echte Standardchronologie.
+- Die ¹⁴C-Alter der Fallstudie sind illustrativ gewählt.
+
+## Quellen und Dank
+
+- IntCal20: Reimer et al. 2020, *Radiocarbon* 62, 725–757. Bitte die Nutzungshinweise auf intcal.org beachten.
+- Splintholz-Spannen (Eiche) in Tab 7 nach Tegel et al. 2022, *Frontiers in Ecology and Evolution* 10.
+- Bayes'sche Grundlagen und OxCal-Bausteine: Bronk Ramsey 2009, *Radiocarbon* 51.
+- Ideen und Übungsdaten (Kollektivgrab): Unterlagen von Martin Hinz zum Seminar „Absolute Chronologie und
+  Isotopenforschung“ (2012), verwendet mit Quellenangabe.
